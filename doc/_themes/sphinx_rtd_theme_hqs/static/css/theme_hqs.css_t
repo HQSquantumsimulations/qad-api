@@ -1,0 +1,17 @@
+@import url("theme.css");
+
+
+footer {
+    margin-top: 2em;
+}
+
+.rubric,
+.rst-content dl p.rubric {
+    margin-top: 2em;
+    margin-bottom: 1em !important;
+    font-size: 120%;
+}
+
+.rst-content dl table {
+    margin-bottom: 0 !important;
+}

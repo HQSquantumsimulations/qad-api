@@ -1,0 +1,11 @@
+requests
+requests_oauthlib
+oauthlib
+appdirs
+typing
+dataclasses
+pyyaml
+asyncio
+sphinx>=1.4
+nbsphinx
+sphinx_rtd_theme
