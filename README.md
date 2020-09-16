@@ -24,7 +24,7 @@ Use QAD-API by importing the class `QAD_API` from the root package `qad_api`.
 Create an instance of this class and use the members to access the API.
 
 To find out more about the API functionality, see the 
-[documentation of QAD_API](https://qad_api.readthedocs.io/en/latest/).
+[documentation of QAD API](https://qad_api.readthedocs.io/en/latest/).
 
 ## Example
 
