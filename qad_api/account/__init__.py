@@ -14,7 +14,7 @@
 
 """Module for managing the QAD user account.
 
-Not yet documented.
+*Not yet documented.*
 """
 
 from qad_api.account.account_api import Account

@@ -1,8 +1,23 @@
+# Copyright 2019 HQS Quantum Simulations GmbH
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""The authentication layer of the QAD API."""
+
 import qad_api.core.internal.backend as backend
 
 import yaml
 import os
-from typing import Optional, Union, Callable, Dict
 
 from requests import Response
 from requests_oauthlib import OAuth2Session
@@ -10,12 +25,15 @@ from oauthlib.oauth2 import TokenExpiredError
 
 
 class AuthMethods:
+    """Methods for how to interact with the user during authentication.
+
+    Currently, the only option is InteractiveConsole.
+    """
     InteractiveConsole = "console"
 
 
 class Session:
-    """
-    The authentication layer of the QAD API.
+    """The authentication layer of the QAD API.
 
     This class lets the user authenticate with the QAD API, stores the token
     for reuse, and serves as an HTTP middleware layer which adds the headers
@@ -25,10 +43,20 @@ class Session:
     def __init__(
         self,
         auth_method: str = AuthMethods.InteractiveConsole,
-    ):
+    ) -> None:
+        """Initializes a new Session object.
+
+        Args:
+            auth_method: The method for how to interact with the user during
+                authentication. This is one of the entries in :class:`AuthMethods`.
+                Currently, the only accepted value is `AuthMethods.InteractiveConsole`,
+                which is also the default value.
+        """
+
         self._backend = backend
 
-        # Set callbacks depending on the method the user chose to interact with the authorization layer
+        # Set callbacks depending on the method the user chose to interact
+        # with the authorization layer
         if auth_method == AuthMethods.InteractiveConsole:
             self._authorization_callback = self._authorization_callback_console
             self._authorization_feedback = self._authorization_feedback_console
@@ -39,7 +67,7 @@ class Session:
         try:
             with open(self._backend.token_db_file) as file:
                 self.stored_token = yaml.safe_load(file)
-        except:
+        except IOError or IOError:
             self.stored_token = None
 
         # OAuth2 Session handler
