@@ -17,48 +17,55 @@
 
 class NotFoundError(Exception):
     """Object not found.
-    
+
     This exception is raised whenever an object is queried which is not
     found in the backend. This can mean that there is no such object with
     the queried ID, or that the object doesn't belong to the user which
     is currently logged in.
 
-    Parameters
-    ----------
-    message : str
-        Usually, the message does not tell you more details about the error.
+    Parameters:
+        message: Usually, the message does not tell you more details about the error.
     """
-    def __init__(self, message: str):
+    def __init__(self, message: str) -> None:
+        """Initialization of the exception object.
+
+        Args:
+            message: A message describing what went wrong.
+        """
         self.message = message
 
 
 class ConsistencyError(Exception):
     """Consistency check failed.
-    
+
     This exception is raised whenever an attempt is being made to save
     (create or update) an object, but the content is not consistent.
 
-    Parameters
-    ----------
-    message : str
-        A detailed explanation about what went wrong during the consistency
-        check.
+    Parameters:
+        message: A detailed explanation about what went wrong during the consistency check.
     """
-    def __init__(self, message: str):
+    def __init__(self, message: str) -> None:
+        """Initialization of the exception object.
+
+        Args:
+            message: A message describing what went wrong.
+        """
         self.message = message
 
 
 class DownloadError(Exception):
     """Download failed.
-    
+
     This exception is raised whenever downloading a file (usually a job's
     result file) failed.
 
-    Parameters
-    ----------
-    message : str
-        A detailed explanation about what went wrong during downloading the
-        file.
+    Parameters:
+        message: A detailed explanation about what went wrong during downloading the file.
     """
-    def __init__(self, message: str):
+    def __init__(self, message: str) -> None:
+        """Initialization of the exception object.
+
+        Args:
+            message: A message describing what went wrong.
+        """
         self.message = message

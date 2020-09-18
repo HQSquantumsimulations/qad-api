@@ -76,7 +76,7 @@ class QAD_API(Module):
         For the list of available sub-functionalities of this API
         see the attribute's documentation of :class:`.Account`.
         """
-        from qad_api.account.account import Account
+        from qad_api.account.account_api import Account
         return self._submodule(Account, f'users/{self._session.userid}/')
 
 
@@ -88,5 +88,5 @@ class QAD_API(Module):
         For the list of available sub-functionalities of this API
         see the attribute's documentation of :class:`.Lattice`.
         """
-        from qad_api.lattice._lattice import Lattice
+        from qad_api.lattice.lattice_api import Lattice
         return self.account._submodule(Lattice, 'lattice/')

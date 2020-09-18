@@ -9,7 +9,7 @@ api_base_url = os.environ.get(
 
 client_id = os.environ.get(
     "QAD_API_CLIENT_ID",
-    "..."
+    "3eq9b50srofnfusqlpvcsj5suq"
 )
 
 authorization_base_url = os.environ.get(

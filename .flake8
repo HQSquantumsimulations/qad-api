@@ -4,5 +4,5 @@ ignore = D400, D401, D415, W503, ANN101, ANN102, ANN002, ANN003
 exclude = .git,__pycache__,doc/conf.py,build,dist,test_*
 docstring-convention = google
 per-file-ignores =
-  __init__.py: F401
+  __init__.py: F401, F403
 
