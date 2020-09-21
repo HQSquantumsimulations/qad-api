@@ -14,8 +14,33 @@
 
 """Exceptions used in the QAD API Python library."""
 
+from requests import Response
 
-class NotFoundError(Exception):
+
+class RestApiError(Exception):
+    """Superclass for levels which occurred on the REST API level.
+
+    This exception (or a subclass of it) might be raised by any API request wrapper.
+    Note that not always a specific subclass is being raised, so do not consider this
+    class being "abstract". However, for some errors the raised exception is an
+    instance of a subclass which more specificly tells you what went wrong.
+
+    Parameters:
+        response: The response object on REST API (HTTP) level.
+        message: A message describing what went wrong.
+    """
+    def __init__(self, message: str, response: Response) -> None:
+        """Initialization of the exception object.
+
+        Args:
+            response: The response object on REST API (HTTP) level.
+            message: A message describing what went wrong.
+        """
+        super().__init__(message)
+        self.response = response
+
+
+class NotFoundError(RestApiError):
     """Object not found.
 
     This exception is raised whenever an object is queried which is not
@@ -26,16 +51,17 @@ class NotFoundError(Exception):
     Parameters:
         message: Usually, the message does not tell you more details about the error.
     """
-    def __init__(self, message: str) -> None:
+    def __init__(self, message: str, response: Response) -> None:
         """Initialization of the exception object.
 
         Args:
+            response: The response object on REST API (HTTP) level.
             message: A message describing what went wrong.
         """
-        self.message = message
+        super().__init__(message, response)
 
 
-class ConsistencyError(Exception):
+class ConsistencyError(RestApiError):
     """Consistency check failed.
 
     This exception is raised whenever an attempt is being made to save
@@ -44,16 +70,17 @@ class ConsistencyError(Exception):
     Parameters:
         message: A detailed explanation about what went wrong during the consistency check.
     """
-    def __init__(self, message: str) -> None:
+    def __init__(self, response: Response, message: str) -> None:
         """Initialization of the exception object.
 
         Args:
+            response: The response object on REST API (HTTP) level.
             message: A message describing what went wrong.
         """
-        self.message = message
+        super().__init__(message, response)
 
 
-class DownloadError(Exception):
+class DownloadError(RestApiError):
     """Download failed.
 
     This exception is raised whenever downloading a file (usually a job's
@@ -62,10 +89,11 @@ class DownloadError(Exception):
     Parameters:
         message: A detailed explanation about what went wrong during downloading the file.
     """
-    def __init__(self, message: str) -> None:
+    def __init__(self, response: Response, message: str) -> None:
         """Initialization of the exception object.
 
         Args:
+            response: The response object on REST API (HTTP) level.
             message: A message describing what went wrong.
         """
-        self.message = message
+        super().__init__(message, response)

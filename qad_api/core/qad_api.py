@@ -14,7 +14,6 @@
 
 from qad_api.core.internal import Module
 from qad_api.core.session import Session
-from typing import Union
 
 
 class QAD_API(Module):
@@ -42,7 +41,7 @@ class QAD_API(Module):
         session: Session = None
     ):
         """Construct a new API handler and authenticate with the backend.
-        
+
         During initialization of the new object, the user is authenticated with
         the backend. For this, an attempt is being made to re-authenticate
         using a session handler stored in a file (similar to "cookies" in your
@@ -55,7 +54,8 @@ class QAD_API(Module):
         browser window back into the console prompt to finish the process.
 
         Args:
-            session: Pass a :class:`Session` instance if you want more control over how the user is authenticated.
+            session: Pass a :class:`Session` instance if you want more control over
+                how the user is authenticated.
         """
         if session is None:
             # Create a new session and ask for authorization.
@@ -66,19 +66,16 @@ class QAD_API(Module):
 
         super().__init__(None, session)
 
-
-
     @property
     def account(self):
         """API for managing the QAD user account.
-        
+
         This attribute is an instance of the :class:`.Account` class.
         For the list of available sub-functionalities of this API
         see the attribute's documentation of :class:`.Account`.
         """
         from qad_api.account.account_api import Account
         return self._submodule(Account, f'users/{self._session.userid}/')
-
 
     @property
     def lattice(self):

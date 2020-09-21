@@ -15,6 +15,7 @@
 """The authentication layer of the QAD API."""
 
 import qad_api.core.internal.backend as backend
+from qad_api.core.exceptions import RestApiError
 
 import yaml
 import os
@@ -67,7 +68,7 @@ class Session:
         try:
             with open(self._backend.token_db_file) as file:
                 self.stored_token = yaml.safe_load(file)
-        except IOError or IOError:
+        except IOError or yaml.YAMLError:
             self.stored_token = None
 
         # OAuth2 Session handler
@@ -99,18 +100,19 @@ class Session:
             self.userid = info['userId']
             self.api_version = info['version']
             return True
-        except:
+        except RestApiError:
             return False
 
     def resume(self):
         """Try to resume a previous session without reauthentication."""
-        
+
         # Apply stored token internally
         if not self.stored_token:
             return False
         self._use_token(self.stored_token)
 
-        # See if token is still valid (this might refresh the access/id token but even this can fail if the refresh token expired)
+        # See if token is still valid (this might refresh the access/id token but even this can
+        # fail if the refresh token expired)
         if not self._init_post_auth():
             return False
 
@@ -121,8 +123,8 @@ class Session:
         """Try to authorize, starting a new session."""
 
         # Make the user call the authorization URI to log in
-        authorization_url, state = self._oauth.authorization_url(self._backend.authorization_base_url)
-        code = self._authorization_callback(authorization_url)
+        auth_url, state = self._oauth.authorization_url(self._backend.authorization_base_url)
+        code = self._authorization_callback(auth_url)
 
         if not code:
             return False
@@ -130,11 +132,11 @@ class Session:
         # Fetch the token
         token = self._oauth.fetch_token(self._backend.token_url, code, include_client_id=True)
         self._use_token(token)
-        
+
         # See if everything worked
         if not self._init_post_auth():
             return False
-            
+
         self._authorization_feedback(False)
         return True
 
@@ -155,7 +157,6 @@ class Session:
         print("")
         return input("> ")
 
-
     def _authorization_feedback_console(self, is_resume: bool):
         print("")
         if is_resume:
@@ -165,20 +166,20 @@ class Session:
         print("")
         print(f"Your user ID: {self.userid}")
         print("")
-        
-        
+
     def request(self, method: str, path: str, **kwargs) -> Response:
         """*Internal.* Make a request with the authentication headers.
-        
+
         This might refresh the token, but never asks for a whole fresh authentication.
         """
         url = self._backend.api_base_url + path
         try:
             return self._oauth.request(method, url, **kwargs)
         except TokenExpiredError:
-            token = self._oauth.refresh_token(self._backend.token_url, client_id=self._backend.client_id)
+            token = self._oauth.refresh_token(
+                self._backend.token_url,
+                client_id=self._backend.client_id
+            )
             self._use_token(token)
             # Repeat request
             return self._oauth.request(method, url, **kwargs)
-
-

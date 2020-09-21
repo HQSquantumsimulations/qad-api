@@ -54,9 +54,7 @@ unit_cell = qad.lattice.unit_cells.create('1D XXZ', {
             ['0', 'X', [0, 0, 0], 0.0, 0.0]
         ],
         "lattice_vectors": [
-            [1, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0]
+            [1, 0, 0]
         ],
         "bonds": [
             ['0', '0', [1, 0, 0], -1.0, 0]
