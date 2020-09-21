@@ -19,7 +19,7 @@ Classes
 .. autosummary::
     :nosignatures:
     :toctree: generated/
-    
+
     QAD_API
 """
 
