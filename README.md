@@ -15,7 +15,8 @@ QAD-API is to clone the following repository, and then "pip install" it
 from the appropriate local folder:
 
 ```shell
-git clone https://github.com/HQSquantumsimulations/qad_api.git
+git clone https://github.com/HQSquantumsimulations/qad-api.git
+cd qad-api
 pip install -e qad_api/
 ```
 
