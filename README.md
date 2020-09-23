@@ -16,8 +16,7 @@ from the appropriate local folder:
 
 ```shell
 git clone https://github.com/HQSquantumsimulations/qad-api.git
-cd qad-api
-pip install -e qad_api/
+pip install -e qad-api
 ```
 
 ## Usage
