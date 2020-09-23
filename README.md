@@ -1,17 +1,18 @@
 # The QAD-API Python library
 
-QAD-API is a Python library for accessing the (REST) API of
+The QAD-API Python library is a library for accessing the (REST) API of
 [QAD Cloud](https://qad.quantumsimulations.de/).
 
 ## Note
 
-As this library servers just as a Python frontend to QAD Cloud, you first need
-an account on that platform before using this Python library.
+As this library serves simply as a Python front-end to the QAD Cloud,
+you will first need an account on this platform, before using the library.
 
 ## Installation
 
-We do not yet provide a PyPi package. The recommended way to install QAD-API
-is to clone this repository, and pip install it from the local folder:
+We do not yet provide a PyPi package. The recommended method for installing
+QAD-API is to clone the following repository, and then "pip install" it
+from the appropriate local folder:
 
 ```shell
 git clone https://github.com/HQSquantumsimulations/qad_api.git
@@ -20,26 +21,26 @@ pip install -e qad_api/
 
 ## Usage
 
-Use QAD-API by importing the class `QAD_API` from the root package `qad_api`.
-Create an instance of this class and use the members to access the API.
+The QAD-API is utilized by importing the class `QAD_API` from the root package
+`qad_api`. In order access the API, one must create an instance of this class.
 
-To find out more about the API functionality, see the 
-[documentation of QAD API](https://qad_api.readthedocs.io/en/latest/).
+To learn more about the API functionality, please refer to the 
+[documentation of QAD_API](https://qad_api.readthedocs.io/en/latest/).
 
 ## Example
 
-One simple example is listed below to get you started quickly.
+To get started with the QAD_API, we provide a quick and simple example here.
 
-Here you see how we create an instance of `QAD_API`, which will authenticate
-the user with the backend. The first time the user does this, they are asked
-to open a link with their browser and use their credentials to authenticate
-with the backend (OAuth2). 
+We will create an instance of `QAD_API`, which will authenticate the user
+with the back-end. The first time this is done, the user will be asked
+to open a link in a browser and use their credentials to authenticate
+with the back-end (OAuth2).
 
-After that, we use that instance to access API functionality. Using this, we
-create a unit-cell and a system for the lattice-based problem solver "SCCE".
-We also create a job for that solver by passing the just-created handlers,
-and wait for the job to be finished. This will take some time, after which we
-download the result file to the local file system.
+After this, we use the instance of `QAD_API` to access the API functionality.
+We create a unit-cell and a system for the lattice-based problem solver "SCCE,"
+and also create a job for that solver by passing the recently created handlers,
+then wait for the job to finish. This will take some time, after which we
+download the results file to the local file system.
 
 ```python
 from qad_api import QAD_API
