@@ -1,4 +1,4 @@
-# Copyright 2019 HQS Quantum Simulations GmbH
+# Copyright 2020 HQS Quantum Simulations GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
