@@ -18,35 +18,45 @@ from qad_api import QAD_API
 qad = QAD_API()
 
 # Create a unit-cell
-unit_cell = qad.lattice.unit_cells.create('1D XXZ', {
+unit_cell = qad.lattice.unit_cells.create('2D Hubbard', { 
     "unitcell": {
-        "atoms": [ #                     eps    U
-            ['0', 'A', [   0, 0, 0],  0.0001, 0.0 ],
-            ['1', 'B', [ 0.5, 0, 0], -0.0001, 0.0 ] 
+        "atoms": [ #                    eps,   U 
+            ['0', 'A', [  0,   0, 0],  0.01, 1.0 ],
+            ['1', 'B', [  0, 0.5, 0], -0.01, 1.0 ],
+            ['2', 'B', [0.5,   0, 0], -0.01, 1.0 ],
+            ['3', 'A', [0.5, 0.5, 0],  0.01, 1.0 ]
         ],
         "bonds": [ #                 t    U
-            ['0', '0', [1, 0, 0], -1.0, 0.0]
+            ['0', '1', [0, 0, 0], -1.0, 0.0 ],
+            ['0', '2', [0, 0, 0], -1.0, 0.0 ],
+            ['1', '3', [0, 0, 0], -1.0, 0.0 ],
+            ['2', '3', [0, 0, 0], -1.0, 0.0 ],
+            ['2', '0', [1, 0, 0], -1.0, 0.0 ],
+            ['3', '1', [1, 0, 0], -1.0, 0.0 ],
+            ['1', '0', [0, 1, 0], -1.0, 0.0 ],
+            ['3', '2', [0, 1, 0], -1.0, 0.0 ]
         ],
         "lattice_vectors": [
-            [1, 0, 0]
+            [1, 0, 0],
+            [0, 1, 0]
         ]
     }
 })
 print(f"Unit cell created: {unit_cell.id}")
 
 # Create a system
-system = qad.lattice.systems.create('1D XXZ', {
+system = qad.lattice.systems.create('2D Hubbard', {
     "system": {
-        "cluster_size":    [14, 1, 1],   # measured in unit cells
-        "system_size":     [ 2, 1, 1],   # measured in clusters
-        "cluster_offset":  [ 0, 0, 0],   # measured in clusters
+        "cluster_size":    [1, 1, 1],   # measured in unit cells
+        "system_size":     [2, 2, 1],    # measured in clusters
+        "cluster_offset":  [0, 0, 0], # measured in clusters
         "system_boundary_condition": "periodic"
     }
 })
 print(f"System created: {system.id}")
 
 # Create a job (will start to run it automatically)
-job = qad.lattice.scce.jobs.create('1D XXZ', unit_cell, system)
+job = qad.lattice.scce.jobs.create('2D Hubbard', unit_cell, system)
 print(f"Job created: {job.id}")
 
 # Wait for the job to be done (when using co-routines: await job.wait())

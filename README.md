@@ -30,6 +30,8 @@ To learn more about the API functionality, please refer to the
 ## Example
 
 To get started with the QAD_API, we provide a quick and simple example here.
+You also find this example in the folder
+[examples/lattice](https://github.com/HQSquantumsimulations/qad-api/tree/master/examples/lattice).
 
 We will create an instance of `QAD_API`, which will authenticate the user
 with the back-end. The first time this is done, the user will be asked
@@ -88,5 +90,5 @@ job.wait_blocking()
 
 # Download the result to a local file
 job.download_result(f"./{job.id}.h5")
-print(f"Downloaded result")
+print("Downloaded result")
 ```

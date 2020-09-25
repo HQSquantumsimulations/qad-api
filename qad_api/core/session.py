@@ -28,7 +28,7 @@ from oauthlib.oauth2 import TokenExpiredError
 class AuthMethods:
     """Methods for how to interact with the user during authentication.
 
-    Currently, the only option is InteractiveConsole.
+    Currently, the only option is `AuthMethods.InteractiveConsole`.
     """
     InteractiveConsole = "console"
 
@@ -163,7 +163,6 @@ class Session:
             print("Successfully resumed previous session with QAD Cloud backend.")
         else:
             print("Successfully authenticated with QAD Cloud backend.")
-        print("")
         print(f"Your user ID: {self.userid}")
         print("")
 
