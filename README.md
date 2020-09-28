@@ -53,14 +53,15 @@ qad = QAD_API()
 # Create a unit-cell
 unit_cell = qad.lattice.unit_cells.create('1D XXZ', {
     "unitcell": {
-        "atoms": [
-            ['0', 'X', [0, 0, 0], 0.0, 0.0]
+        "atoms": [ #                     eps    U
+            ['0', 'A', [   0, 0, 0],  0.0001, 0.0 ],
+            ['1', 'B', [ 0.5, 0, 0], -0.0001, 0.0 ] 
+        ],
+        "bonds": [ #                 t    U
+            ['0', '0', [1, 0, 0], -1.0, 0.0]
         ],
         "lattice_vectors": [
             [1, 0, 0]
-        ],
-        "bonds": [
-            ['0', '0', [1, 0, 0], -1.0, 0]
         ]
     }
 })
@@ -69,23 +70,19 @@ print(f"Unit cell created: {unit_cell.id}")
 # Create a system
 system = qad.lattice.systems.create('1D XXZ', {
     "system": {
-        "cluster_size": [42, 1, 1],
-        "system_size": [1, 1, 1],
-        "spinful": False,
-        "N": 21,
-        "system_boundary_condition": 'periodic'
-    },
-    "run": {
-        "states": 1
+        "cluster_size":    [14, 1, 1],   # measured in unit cells
+        "system_size":     [ 2, 1, 1],   # measured in clusters
+        "cluster_offset":  [ 0, 0, 0],   # measured in clusters
+        "system_boundary_condition": "periodic"
     }
 })
 print(f"System created: {system.id}")
 
 # Create a job (will start to run it automatically)
-job = qad.lattice.scce.jobs.create('1D XXZ Test', unit_cell, system)
+job = qad.lattice.scce.jobs.create('1D XXZ', unit_cell, system)
 print(f"Job created: {job.id}")
 
-# Wait for the job to be done (you might want to use co-routines: await job.wait())
+# Wait for the job to be done (when using co-routines: await job.wait())
 job.wait_blocking()
 
 # Download the result to a local file
