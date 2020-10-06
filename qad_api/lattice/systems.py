@@ -41,7 +41,9 @@ class Systems(Module):
             return self._post('', obj, System)
         except HTTPError as error:
             if error.response.status_code == 400:
-                raise ConsistencyError(error.response.json()['message'])
+                raise ConsistencyError(error.response.json()['message'], error.response) from None
+            else:
+                raise
 
     def update(self, obj: System) -> System:
         """Updates an existing system, given an (updated) handler object."""
@@ -49,7 +51,9 @@ class Systems(Module):
             return self._put(obj.id, obj, System)
         except HTTPError as error:
             if error.response.status_code == 400:
-                raise ConsistencyError(error.response.json()['message'])
+                raise ConsistencyError(error.response.json()['message'], error.response) from None
+            else:
+                raise
 
     def remove(self, id: str) -> None:
         """Removes a system entirely (cannot be undone!)."""
