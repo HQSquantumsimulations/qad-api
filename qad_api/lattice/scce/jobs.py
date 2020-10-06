@@ -60,7 +60,7 @@ class Jobs(Module):
             return self._post('', obj, Job)
         except HTTPError as error:
             if error.response.status_code == 400:
-                raise ConsistencyError(error.response.json()['message'])
+                raise ConsistencyError(error.response.json()['message'], error.response) from None
             else:
                 raise
 

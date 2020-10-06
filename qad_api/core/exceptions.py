@@ -70,7 +70,7 @@ class ConsistencyError(RestApiError):
     Parameters:
         message: A detailed explanation about what went wrong during the consistency check.
     """
-    def __init__(self, response: Response, message: str) -> None:
+    def __init__(self, message: str, response: Response) -> None:
         """Initialization of the exception object.
 
         Args:
@@ -89,7 +89,7 @@ class DownloadError(RestApiError):
     Parameters:
         message: A detailed explanation about what went wrong during downloading the file.
     """
-    def __init__(self, response: Response, message: str) -> None:
+    def __init__(self, message: str, response: Response) -> None:
         """Initialization of the exception object.
 
         Args:

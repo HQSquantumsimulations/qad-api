@@ -41,7 +41,9 @@ class UnitCells(Module):
             return self._post('', obj, UnitCell)
         except HTTPError as error:
             if error.response.status_code == 400:
-                raise ConsistencyError(error.response.json()['message'])
+                raise ConsistencyError(error.response.json()['message'], error.response) from None
+            else:
+                raise
 
     def update(self, obj: UnitCell) -> UnitCell:
         """Updates an existing unit-cell, given an (updated) handler object."""
@@ -49,7 +51,9 @@ class UnitCells(Module):
             return self._put(obj.id, obj, UnitCell)
         except HTTPError as error:
             if error.response.status_code == 400:
-                raise ConsistencyError(error.response.json()['message'])
+                raise ConsistencyError(error.response.json()['message'], error.response) from None
+            else:
+                raise
 
     def remove(self, id: str) -> None:
         """Removes a unit-cell entirely (cannot be undone!)."""
